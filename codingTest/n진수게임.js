@@ -1,3 +1,4 @@
+
 function solution(n, t, m, p) {
     var answer = '';
     
@@ -32,5 +33,6 @@ function solution(n, t, m, p) {
         // }
     }
 }
+
 
 console.log(solution(16, 16, 2, 2));

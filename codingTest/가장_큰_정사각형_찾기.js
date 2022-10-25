@@ -1,3 +1,4 @@
+
 function solution1(board)
 {
     var answer = 1;
@@ -57,6 +58,8 @@ function solution(board) {
   
     return answer * answer;
   }
+
+
 
 
 console.log(solution([[0,0,1,1],[1,1,1,1]]))

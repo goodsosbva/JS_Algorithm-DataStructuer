@@ -1,3 +1,4 @@
+
 //최대공약수 구하기
 const gcd = (a, b) => {
   while (b > 0) {
@@ -26,3 +27,4 @@ const solution = (arr) => {
 // console.log(gcd(24, 18))
 // console.log(lcm(24, 18))
 console.log(solution([2, 6, 8, 14]));
+
