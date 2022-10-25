@@ -1,3 +1,4 @@
+
 const getPermutations = function (arr, selectNumber) {
   const results = [];
   if (selectNumber === 1) return arr.map((el) => [el]);
@@ -60,3 +61,4 @@ function solution(n, k) {
 }
 
 console.log(solution(3, 5));
+

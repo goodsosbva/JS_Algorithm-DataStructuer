@@ -1,3 +1,4 @@
+
 def solution(n):
     answer = [0,3,11]
     index = int(n/2)
@@ -9,6 +10,7 @@ def solution(n):
         answer.append((3*answer[i-1]+sum(answer[1:i-1])*2+2)%1000000007)
 
     return answer[index]
+
 
 
 print(solution(12))

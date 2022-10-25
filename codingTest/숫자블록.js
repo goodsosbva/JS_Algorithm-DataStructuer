@@ -1,3 +1,4 @@
+
 function solution1(begin, end) {
     var n = end - begin + 1;
     const answer = Array.from({length: n + 1}, () => 0);
@@ -44,5 +45,5 @@ function solution (begin, end) {
     return 1;
   }
 
-// console.log(solution(1, 50));
+
 console.log(solution(1, 10));
