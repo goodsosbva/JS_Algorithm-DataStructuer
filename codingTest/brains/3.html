@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body>
+    <button id="btn1">btn 1</button>
+    <div id="btn1Result"></div>
+
+    <button id="btn2">btn 2</button>
+    <div id="btn2Result"></div>
+
+    <button id="btn3">btn 3</button>
+    <div id="btn3Result"></div>
+</body>
+    <script>
+        function btnClikcHandler(idx) {
+            var cnt = 0;
+
+            console.log("hi!");
+            ++cnt;
+            var t = document.getElementById(`btn${idx}Result`);
+            t.innerHTML = "btn" + idx + "clked" + cnt;
+            
+        }
+
+    for (let i = 0; i < 3; ++i) {
+        // var t = document.getElementById(`btn${i + 1}`);
+        // console.log(t);
+        $("button[id*='btn']").onclick = btnClikcHandler(i + 1)
+    }
+    </script>
+</html>
