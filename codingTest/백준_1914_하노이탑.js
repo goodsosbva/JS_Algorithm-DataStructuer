@@ -20,7 +20,6 @@ rl.on("close", () => {
 function solution(input) {
     const k = parseInt(input);
 
-    // 2^k - 1 의 값을 출력
     const totalMoves = (BigInt(2) ** BigInt(k)) - BigInt(1);
     console.log(totalMoves.toString());
 
