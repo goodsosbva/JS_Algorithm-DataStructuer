@@ -86,9 +86,7 @@ function solution(edges) {
         for (const c of comp) {
             if (directThunk[c]) {
                 for (const nc of directThunk[c]) {
-                    if (comp.has(nc)) {
-                        tCount++;
-                    }
+                    tCount++;
                 }
             }
         }
