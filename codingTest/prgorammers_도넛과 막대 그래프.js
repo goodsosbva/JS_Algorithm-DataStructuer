@@ -2,101 +2,103 @@ function solution(edges) {
     var answer = [];
     
     const degreeCounts = {};
-    
-    edges.forEach(([from, to]) => {
-        if (!degreeCounts[from]) {
-            degreeCounts[from] = { ingress: 0, outgress: 0};
-        }
-        degreeCounts[from].outgress++;
+    for (let i = 0; i < edges.length; i++) {
+        const [from, to] = edges[i];
         
-        if (!degreeCounts[to]) {
-            degreeCounts[to] = { ingress: 0, outgress: 0}
+        if (!degreeCounts[from]) {
+            degreeCounts[from] = {in: 0, out: 0};
         }
-        degreeCounts[to].ingress++;
-    });
-    
+        if (!degreeCounts[to]) {
+            degreeCounts[to] = {in: 0, out: 0};
+        }
+        degreeCounts[from].out++;
+        degreeCounts[to].in++;
+    }
     
     let specialVertex = -1;
     for (const vertex in degreeCounts) {
-        if (degreeCounts[vertex].ingress === 0 && degreeCounts[vertex].outgress >= 2) {
+        if (degreeCounts[vertex].in === 0 && degreeCounts[vertex].out >= 2) {
             specialVertex = Number(vertex);
             break;
         }
     }
     
-    const allVertices = new Set();
+    const fEdges = new Set();
     for (const [from, to] of edges) {
-        if (from !== specialVertex) allVertices.add(from);
-        if (to !== specialVertex) allVertices.add(to);
+        if (Number(from) !== Number(specialVertex)) fEdges.add(from);
+        if (Number(to) !== Number(specialVertex)) fEdges.add(to);
     }
     
     const graph = {};
-    for (const v of allVertices) {
-        graph[v] = new Set();
+    for (const edg of fEdges) {
+        graph[edg] = new Set();
     }
     
     for (const [from, to] of edges) {
-        if (from === specialVertex || to === specialVertex) continue;
+        if (Number(from) === Number(specialVertex) || Number(to) === Number(specialVertex)) continue; 
         
         graph[from].add(to);
         graph[to].add(from);
     }
     
-    const component = new Set();
+    const component = [];
     const visited = new Set();
-    for (const item of allVertices) {
+    for (const item of fEdges) {
         if (visited.has(item)) continue;
-        const q = [];
         const comp = new Set();
+        const q = [];
+        
+        comp.add(item);
         q.push(item);
         visited.add(item);
-        comp.add(item);
         
         while (q.length > 0) {
             const cur = q.shift();
             
             for (const nxt of graph[cur]) {
                 if (!visited.has(nxt)) {
-                    q.push(nxt);
+                    comp.add(nxt);
+                    q.push(nxt)
                     visited.add(nxt);
-                    comp.add(nxt)
                 }
             }
         }
-        component.add(comp);
+        
+        component.push(comp);
     }
     
-    const directThunk = {};
+    const dirThunk = {};
     for (const [from, to] of edges) {
         if (from === specialVertex || to === specialVertex) continue;
-        if (!(from in directThunk)) {
-            directThunk[from] = [];
+        
+        if (!(from in dirThunk)) {
+            dirThunk[from] = [];
         }
         
-        directThunk[from].push(to);
+        dirThunk[from].push(to);
     }
-    
+        
     let donutGraph = 0;
     let stickGraph = 0;
     let figure8Graph = 0;
     for (const comp of component) {
-        const vCount = comp.size;
+        const eCount = comp.size;
         let tCount = 0;
         
         for (const c of comp) {
-            if (directThunk[c]) {
-                for (const nc of directThunk[c]) {
-                    tCount++;
-                }
+            if (dirThunk[c]) {
+                tCount += dirThunk[c].length;
             }
         }
         
-        if (tCount === vCount) {
-          donutGraph++;
-        } else if (tCount === vCount - 1) {
-          stickGraph++;
-        } else if (tCount === vCount + 1) {
-          figure8Graph++;
+        if (eCount === tCount) {
+            donutGraph++;
+        } 
+        else if (eCount === tCount + 1) {
+            stickGraph++;
+        } 
+        else {
+            figure8Graph++;
         }
     }
     
