@@ -1,0 +1,67 @@
+function makeBinary(number) {
+  const bits = [];
+  if (number === 0) return [0];
+  while (number > 0) {
+    bits.unshift(number % 2);
+    number = Math.floor(number / 2);
+  }
+  return bits;
+}
+
+function solution(data, col, row_begin, row_end) {
+    var answer = [];
+    
+    data.sort((a, b) => {
+      const diff2 = a[col - 1] - b[col - 1];
+        
+      if (diff2 !== 0) return diff2;
+      return b[0] - a[0];
+    });
+    
+    let modedRows = [];
+    for (let i = row_begin - 1; i < row_end; i++) {
+        const rows = data[i];
+        const idx = i + 1;    
+        
+        let sumModedRows = 0;
+        for (let row of rows) {
+            const tmp = row % idx;
+            sumModedRows += tmp;
+        }
+        
+        modedRows.push(sumModedRows);
+        sumModedRows = 0;
+    }
+    
+    let maxLength = 0;
+    let xorValues = [];
+    for (let mRows of modedRows) {
+        const tmp = makeBinary(mRows);
+        xorValues.push(tmp);
+        maxLength = Math.max(maxLength, tmp.length);
+    }
+    
+    xorValues.forEach(arr => {
+        while (arr.length < maxLength) {
+          arr.unshift(0);
+        }
+    });
+    
+    for (let i = 0; i < xorValues[0].length; i++) {
+        let count = 0;
+        
+        for (let j = 0; j < xorValues.length; j++) {
+            if (xorValues[j][i] === 1) count++;
+        }
+        
+        if (count !== 0 && count % 2 === 1) {
+            answer.push(1);
+        } else {
+            answer.push(0);
+        }
+    }
+    
+    const binStr = answer.join('');
+    const decimal = parseInt(binStr, 2);   
+    return decimal;
+}
