@@ -5,7 +5,7 @@
 
 ### 1. 소수 구하기 https://www.acmicpc.net/problem/1929
 ### 2. 안전 영역 https://www.acmicpc.net/problem/2468
-- 스파트 시니어 코드
+- 스파르타 시니어 코드
 ```python
 import sys
 sys.setrecursionlimit(100000)
