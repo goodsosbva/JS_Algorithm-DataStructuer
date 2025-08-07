@@ -1,4 +1,7 @@
-n = int(input())
+import sys
+sys.setrecursionlimit(10**6)
+
+n = int(sys.stdin.readline())
 
 graph = [[] for _ in range(n + 1)]
 for i in range(n - 1):
@@ -23,3 +26,4 @@ if n == 1:
 else:
     dfs(1, 0)
     print(max_length)
+
