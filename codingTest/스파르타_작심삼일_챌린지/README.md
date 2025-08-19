@@ -405,3 +405,85 @@ while True:
 - set 연산의 강력함
 - 같은 문제라도 리스트로 풀면 O(nlogn)이나 O(n^2)이지만, set으로 바꾸면 O(n)수준까지도 줄어든다.
 - 간결함과 성능의 균형: 파이썬의 고급 문법은 성능과 코드 간결함을 동시에 잡을 수 있게 해준다.
+
+### 보너스3 - 225. Implement Stack using Queues - https://leetcode.com/problems/implement-stack-using-queues/description/
+
+자료구조의 성격을 역으로 구현하는 전형적 스왑
+🔍 접근 방법
+이 문제는 Queue만을 사용해서 StacK의 동작을 흉내내는 문제야.
+
+Queue는 FIFO(First-In-First-Out),
+Stack은 LIFO(Last-In-First-Out)이죠.
+
+즉, 먼저 들어온 데이터를 나중에 꺼내야 하므로,
+Queue의 성격을 비틀어서 Stack처럼 동작하게 만들어야 합니다.
+
+LeetCode의 문제에서는 다음 4가지 연산을 구현
+- push(x) → 스택에 값 x 추가
+- pop() → 가장 마지막에 넣은 값 제거
+- top() → 가장 마지막에 넣은 값 조회
+- empty() → 비었는지 확인
+
+핵심 포인트:
+• Queue와 Stack의 동작 원리 차이를 정확히 이해할 것
+• Queue 1개로도 가능하지만, 보통은 2개 사용하는 게 더 명확함
+• Push할 때 모든 순서를 정렬해두면 Pop이 빠름. 혹은 그 반대 전략도 가능
+
+접근 방법 (2개의 큐 사용)
+1. push 시에는 보조 큐에 새 값을 넣고, 기존 큐를 전부 옮겨서 새 값이 앞에 오도록 재정렬
+2. 그런 뒤, 큐를 스왑해줌 -> main queue가 항상 최신 상태 유지
+3. pop이나 top은 큐의 맨 앞 요소로 처리 가능, 즉시 처리.
+4. empty는 main queue가 비었는지 체크
+
+주의사항:
+- push 연산이 O(n)이 되긴 하지만, pop과 top은 O(1)이라 균형이 맞아
+- 시간복잡도와 스왑 전략을 꼼꼼히 확인해보자
+💻 풀이 코드 1
+
+```python
+from collections import deque
+
+class MyStack:
+    def __init__(self):
+        self.q1 = deque()
+        self.q2 = deque()
+
+    def push(self, x: int) -> None:
+        self.q2.append(x)
+        while self.q1:
+            self.q2.append(self.q1.popleft())
+        self.q1, self.q2 = self.q2, self.q1
+
+    def pop(self) -> int:
+        return self.q1.popleft()
+
+    def top(self) -> int:
+        return self.q1[0]
+
+    def empty(self) -> bool:
+        return not self.q1
+```
+
+📝 코드 설명
+- `push`: 새 값을 q2에 넣고, 기존 q1 내용을 q2 뒤에 붙인 다음 스왑
+- `pop`: q1의 맨 앞 값을 제거 → LIFO 구조 유지됨
+- `top`: q1의 첫 번째 값 반환
+- `empty`: q1이 비었는지 체크
+📊 복잡도 분석
+시간 복잡도: - push: O(n) - pop: O(1) - top: O(1) - empty: O(1)
+공간 복잡도: O(n)
+⚡ 최적화 팁
+1. 한 큐로도 구현 가능하지만 복잡해짐
+- push 연산 때 큐를 순환시키면 가능하지만 가독성이 떨어지고 유지보수에 불리
+2. 스왑 방식은 직관성과 효율의 균형
+- push가 O(n)이어도 나머지 연산이 빠르기 때문에 실전에서 자주 쓰임
+3. 데이터 구조 시뮬레이션은 그림을 그려가며 이해
+- 문제 풀 때, 직접 큐에 값이 어떻게 이동하는지 종이에 써보면 이해가 빨라
+
+[Practical Tips]
+- 이런 시뮬레이션 문제는 면접에서 '자료구조 이해도'를 체크할 때 아주 자주 나와
+- 예전 카카오, 쿠팡, 우아한형제들 같은 회사의 실무 코딩테스트에서도 자주 등장
+- 실제 서비스에서도 종종 queue나 stack의 동작을 흉내내거나, swap 전략을 써야 할 상황 충분히 마주할 수 있어! (브라우저 히스토리, 미리보기 기능 등)
+🎯 학습 포인트
+- Queue와 Stack의 차이를 근본적으로 이해하는 게 중요해
+- Python의 `deque`는 queue와 stack 양쪽에 모두 활용 가능
