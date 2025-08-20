@@ -489,7 +489,7 @@ class MyStack:
 - Python의 `deque`는 queue와 stack 양쪽에 모두 활용 가능
 - 
 
-### 보너스 4 - 학생 인기도 측정
+### 보너스 4 - 학생 인기도 측정 - https://www.acmicpc.net/problem/25325
 
 정렬
 🔍 접근 방법
