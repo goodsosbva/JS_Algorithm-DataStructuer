@@ -487,3 +487,75 @@ class MyStack:
 🎯 학습 포인트
 - Queue와 Stack의 차이를 근본적으로 이해하는 게 중요해
 - Python의 `deque`는 queue와 stack 양쪽에 모두 활용 가능
+- 
+
+### 보너스 4 - 학생 인기도 측정
+
+정렬
+🔍 접근 방법
+이 문제는 정렬/구현을 활용하는 문제입니다.
+
+핵심 포인트:
+
+- 입력된 이름 - 사전처럼 생각하기
+- 이름 빈도 카운트는 dict로 처리
+- 정렬 기준은 (빈도 수 내림차순, 이름 오름차순)
+
+접근 방법:
+
+1. 첫 줄 입력 → 학생 수 n
+
+2. 이름 리스트 받기 → 이름 사전 생성 (dict 초기화)
+
+3. 나머지 n줄에서 각 줄마다 등장한 이름마다 카운트 증가
+
+4. 이름들을 빈도 기준 정렬 후 출력
+
+주의사항:
+
+- 등장하지 않은 이름? 여기선 그럴 필요 없음
+- 입력된 이름 중 실제로 나온 것만!!
+💻 풀이 코드 1
+
+```pytohn
+from collections import defaultdict
+
+n = int(input())
+names = input().split()
+
+count = defaultdict(int)
+
+# 이름 후보 등록
+for name in names:
+    count[name] = 0
+
+# 투표 카운트
+for _ in range(n):
+    votes = input().split()
+    for name in votes:
+        count[name] += 1
+
+# 정렬 기준: 빈도 내림차순, 이름 오름차순
+sorted_names = sorted(count.items(), key=lambda x: (-x[1], x[0]))
+
+# 출력
+for name, c in sorted_names:
+    print(name, c)
+```
+
+📝 코드 설명
+-
+📊 복잡도 분석
+시간 복잡도: O(N² + N log N) = O(N^2)
+공간 복잡도: O(N)
+⚡ 최적화 팁
+- 정렬 조건 여러 개: (빈도 내림차순, 이름 오름차순)은 key=lambda x: (-x[1], x[0]) 로 한 번에 가능
+- collections.defaultdict()
+🎯 학습 포인트
+1. 정렬 기준이 복합적일 때는 Lambda함수를 잘 사용해야한다.
+2. dict는 등장 횟수 세는 데 매우 자주 사용
+3. 카운트 후 정렬, 인기/빈도 관련 문제 정말 많이 나오는 패턴이니까 기본적으로 이해하고 있기
+🔗 관련 문제
+- 대회나 시험에서 빈도 카운트 → 바로 dict 또는 Counter
+- 이름이 오름차순으로 묶일 수 있으므로, 사전 순 정렬 기준
+- defaultdict는 실무에서도 깔끔한 코드 만들 때 유용하게 쓰이니 잘 써봅시당
