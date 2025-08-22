@@ -604,9 +604,9 @@ result = unique_count // rule[game_type]
 print(result)
 ```
 
-# set()으로 중복 제거
-# rule[game_type]으로 필요 인원 수를 바로 가져옴
-# 최대한 많이 게임을 만들기 위해선 몫을 구하면 됨 (//)
+- set()으로 중복 제거
+- rule[game_type]으로 필요 인원 수를 바로 가져옴
+- 최대한 많이 게임을 만들기 위해선 몫을 구하면 됨 (//)
 📝 코드 설명
 -
 📊 복잡도 분석
