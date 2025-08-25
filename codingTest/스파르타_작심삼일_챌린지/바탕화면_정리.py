@@ -7,8 +7,8 @@ def solution(wallpaper):
         m = list(wallpaper[i])
         maps.append(m)
 
-    minX = len(maps[0])
-    minY = len(maps)
+    minX = len(maps)
+    minY = len(maps[0])
     maxX = -1
     maxY = -1
     for x in range(len(maps)):
