@@ -103,7 +103,7 @@ function clean(map, newMap, x1, y1, x2, y2, r, c) {
   }
 
   // 위
-  while (nx > x2 + 1) {
+  while (nx - 1 > x2) {
     newMap[nx - 1][ny] = map[nx][ny];
     nx--;
   }
