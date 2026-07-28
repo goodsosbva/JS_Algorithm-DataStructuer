@@ -30,7 +30,7 @@ function solution(book_time) {
             for (let w = 0; w < books[q].length; w++) {
                 const [bst, bend] = books[q][w];
                 
-                if (bst >= end + 10 || bend + 10 <= st) {
+                if (bst >= end || bend + 10 <= st) {
                     need_room = false;
                 } else {
                     need_room = true;
